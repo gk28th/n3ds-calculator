@@ -14,30 +14,35 @@ int main(int argc, char **argv)
 	consoleInit(GFX_TOP, &topScreen);
 	consoleInit(GFX_BOTTOM, &bottomScreen);
 
-	//Before doing any text printing we should select the PrintConsole in which we are willing to write, otherwise the library will print on the last selected/initialized one
-	//Let's start by printing something on the top screen
+	//use console select to choose which screen to print to
+	//sent to top
 	consoleSelect(&topScreen);
 	std::cout << "\x1b[15;16HConsole Demo V1.0.0";
 	printf("\x1b[25;16HPress Start to exit!");
 
-	//Now write something else on the bottom screen
+	//sent to bottom
+	//treat consoleSelect like a variable. you only have to initialise it once unless you want to change the value of it
 	consoleSelect(&bottomScreen);
 	std::cout <<"Press A for Addition\n\n";
 	std::cout <<"Press B for Subtraction\n\n";
 	std::cout <<"Press X for Multiplication\n\n";
 	std::cout <<"Press Y for Division";
 
-	
-	
-
 	// Main loop
 	while (aptMainLoop())
 	{
+		
 		//Scan all the inputs. This should be done once for each frame
 		hidScanInput();
 
 		//hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
 		u32 kDown = hidKeysDown();
+
+		
+		if (kDown & KEY_A) addNumbers(); //call functions for operations
+		if (kDown & KEY_B) subNumbers();
+		if (kDown & KEY_X) multiplyNumbers();
+		if (kDown & KEY_Y) divNumbers();
 
 		if (kDown & KEY_START) break; // break in order to return to hbmenu
 
