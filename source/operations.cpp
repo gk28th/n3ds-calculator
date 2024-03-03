@@ -15,10 +15,10 @@ void operationNumbers(int operation)
     consoleClear();
     consoleSelect(&topScreen);
     consoleClear();
-    std::cout << operation;    
+    // std::cout << operation;   used for debugging the broken switch statements
     
         if (operation == 1)                                         // using multiple if statements because switch doesnt work
-            std::cout << "\x1b[15;15HAddition Mode: B to Cancel";
+            std::cout << "\x1b[15;15HAddition Mode: B to Cancel";   // maybe idk how to use switch statements 
         if (operation == 2)
            std::cout << "\x1b[15;15HSubtraction Mode: B to Cancel";
         if (operation == 3)

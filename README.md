@@ -1,1 +1,1 @@
-Intended for learning purposes only. Link to this page for the download
+Intended for learning purposes only. Link to this page for the download. Not perfect needs optimisation. To understandthis take a look at the comments and libctru documentation. TODO: add code comments and add a gui later on
