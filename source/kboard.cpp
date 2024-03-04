@@ -8,7 +8,7 @@
 #include <iostream>
 #include <3ds.h>
 
-void inputKboard(double long &x, double long &y, bool &inputSucess)
+void inputKboard(double long &x, double long &y, bool &inputSucess) // passed by reference so values can be changed
 {
 	
     PrintConsole topScreen, bottomScreen;   //initialise both screens as consoles
@@ -27,7 +27,7 @@ void inputKboard(double long &x, double long &y, bool &inputSucess)
 
     
     consoleSelect(&bottomScreen);   // clear screens
-    consoleClear();
+    consoleClear();                 // need to make function
     consoleSelect(&topScreen);
     consoleClear();
     
@@ -36,38 +36,38 @@ void inputKboard(double long &x, double long &y, bool &inputSucess)
     while(true)
     {
         hidScanInput();             // scan for input
-        u32 kDown = hidKeysDown();
+        u32 kDown = hidKeysDown();  // variable destroyed once you exit out of loop
 
-        if(kDown & KEY_A)          // if a is presses, open the keyboard and sent input to our buffer then break this loop
+        if(kDown & KEY_A)           // if a is presses, open the keyboard and sent input to our buffer then break this loop
         {
             swkbdInputText(&swkbd, textBuffer, sizeof(textBuffer) ); // actualy use the keyboard
             break;
         }
-        gfxSwapBuffers();
-		gfxFlushBuffers();
+        gfxSwapBuffers();             // do this for every fame
+		gfxFlushBuffers();            // examples have it in the wrong order apparently
         gspWaitForVBlank();
     }
 
-    x = strtod(textBuffer, NULL);    // x equals to whatever has been inputed
+    x = strtod(textBuffer, NULL);     // x equals to whatever has been inputed
 
-    consoleSelect(&bottomScreen);   // clear screens
-    consoleClear();                 // should really create a function to do this
+    consoleSelect(&bottomScreen);     // clear screens
+    consoleClear();                   // should really create a function to do this
     consoleSelect(&topScreen);
     consoleClear();
     std::cout << "\x1b[15;13HA to input 2nd number";
 
-    while(true)
+    while(true)                     // loop cannot be avoided
     {
         hidScanInput();             // scan for input
         u32 kDown = hidKeysDown();
 
-        if(kDown & KEY_A)          // if a is presses, open the keyboard and sent input to our buffer then break this loop
+        if(kDown & KEY_A)           // if a is presses, open the keyboard and sent input to our buffer then break this loop
         {
             swkbdInputText(&swkbd, textBuffer, sizeof(textBuffer) ); // actualy use the keyboard
             break;
         }
-        gfxSwapBuffers();
-		gfxFlushBuffers();
+        gfxSwapBuffers();           // make a function ??
+		gfxFlushBuffers();          // search double buffering
         gspWaitForVBlank();
     }
 
