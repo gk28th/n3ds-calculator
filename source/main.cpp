@@ -6,56 +6,46 @@
 
 int main(int argc, char **argv)
 {
-	//initialize services
-	gfxInitDefault();
+	
+	gfxInitDefault();						// initialize services
+	
+	PrintConsole topScreen, bottomScreen;	// we need one PrintConsole for each screen
+	
+	consoleInit(GFX_TOP, &topScreen);		// initialize console for each screen
+	consoleInit(GFX_BOTTOM, &bottomScreen); // pass by referece so it can be changed
 
-	//we need one PrintConsole for each screen
-	PrintConsole topScreen, bottomScreen;
-
-	//initialize console for each screen
-	consoleInit(GFX_TOP, &topScreen);
-	consoleInit(GFX_BOTTOM, &bottomScreen);
-
-	//use console select to choose which screen to print to
-	//sent to top
-	consoleSelect(&topScreen);
-	std::cout << "\x1b[15;16HConsole Demo V1.0.0";
+	consoleSelect(&topScreen);						// use console select to choose which screen to print to
+	std::cout << "\x1b[15;16HConsole Demo V1.0.0";  // sent to the top
 	std::cout << "\x1b[25;16HPress Start to exit!";
 
-	//sent to bottom
-	//treat consoleSelect like a variable. you only have to initialise it once unless you want to change the value of it
-	consoleSelect(&bottomScreen);
-	std::cout <<"Press A for Addition\n\n";
-	std::cout <<"Press B for Subtraction\n\n";
+	consoleSelect(&bottomScreen);					// sent to bottom
+	std::cout <<"Press A for Addition\n\n";			//treat consoleSelect like a variable. you only have to initialise it once unless you want to change the value of it
+	std::cout <<"Press B for Subtraction\n\n";		
 	std::cout <<"Press X for Multiplication\n\n";
 	std::cout <<"Press Y for Division";
 
-	// Main loop
-	while (aptMainLoop())
+	while (aptMainLoop())	// main loop
 	{
 
-		//Scan all the inputs. This should be done once for each frame
-		hidScanInput();
 		
-		//hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-		u32 kDown = hidKeysDown();
+		hidScanInput();		//Scan all the inputs. This should be done once for each frame
 		
-		if (kDown & KEY_A) operationNumbers(1); //call functions for operations
-		if (kDown & KEY_B) operationNumbers(2);
+		
+		u32 kDown = hidKeysDown();				// hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
+		
+		if (kDown & KEY_A) operationNumbers(1); // call functions for operations
+		if (kDown & KEY_B) operationNumbers(2); // 1 for add, 2 for sub, 3 for multiplication, 4 for division 
 		if (kDown & KEY_X) operationNumbers(3);
 		if (kDown & KEY_Y) operationNumbers(4);
 
-		if (kDown & KEY_START) break; // break in order to return to hbmenu
+		if (kDown & KEY_START) break; 			// break in order to return to hbmenu
 
-		// Flush and swap framebuffers	
-		gfxSwapBuffers();
-		gfxFlushBuffers();
-		//Wait for VBlank
-		gspWaitForVBlank();
+			
+		gfxSwapBuffers();	// Flush and swap framebuffers
+		gfxFlushBuffers();	// do this order apparently 
+		gspWaitForVBlank(); // Wait for VBlank
 	}
 
-	// Exit services
-	gfxExit();
-
+	gfxExit();				// Exit services
 	return 0;
 }
