@@ -1,7 +1,6 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
 
-// Function prototype for addNumbers
-void operationNumbers(int operations);
+void operationNumbers(int operations);  // Function prototype for addNumbers
 
 #endif

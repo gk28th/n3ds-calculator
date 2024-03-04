@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	{
 
 		
-		hidScanInput();		//Scan all the inputs. This should be done once for each frame
+		hidScanInput();		// Scan all the inputs. This should be done once for each frame
 		
 		
 		u32 kDown = hidKeysDown();				// hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
